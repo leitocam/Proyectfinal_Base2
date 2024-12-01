@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos - Tienda de Ropa de Alpaca</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/indexStyles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Tienda de Ropa de Alpaca</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('index') }}#about">Nosotros</a></li>
+                    <li><a href="{{ url_for('viewProducts') }}">Productos</a></li>
+                    <li><a href="{{ url_for('index') }}#contact">Contacto</a></li>
+                    <li><a href="{{ url_for('view_cart') }}" class="btn">Ver Carrito</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section id="products" class="products">
+            <div class="container">
+                <h2>Todos los Productos de Ropa de Alpaca</h2>
+                <div class="product-list">
+                    {% for product in products %}
+                        <div class="product-item">
+                            <img src="{{ url_for('static', filename='img/' + product['name'] + '.jpg') }}" alt="{{ product['name'] }}">
+                            <h3>{{ product['name'] }}</h3>
+                            <p>{{ product['description'] }}</p>
+                            <p>Precio: ${{ product['price'] }}</p>
+                            <form action="{{ url_for('add_to_cart', product_id=product['_id']) }}" method="post">
+                                <button type="submit" class="btn">Agregar al carrito</button>
+                            </form>
+                            <a href="#" class="btn-secondary">Ver más detalles</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Tienda de Ropa de Alpaca. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
